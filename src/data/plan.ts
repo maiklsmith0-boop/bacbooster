@@ -1,0 +1,451 @@
+// Plan de révision 10 jours - Math 2 BAC Sciences Physiques BIOF
+// Source: alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof
+
+export type Chapter = {
+  id: string;
+  title: string;
+  titleAr: string;
+  semester: 1 | 2;
+  difficulty: 1 | 2 | 3;
+  estimatedHours: number;
+  docUrl: string;
+  pdfUrl: string;
+  coursUrl: string;
+  keyPoints: string[];
+  formulas: string[];
+};
+
+export const chapters: Chapter[] = [
+  {
+    id: "limites",
+    title: "Limites et dérivation (Rappel)",
+    titleAr: "النهايات والاشتقاق",
+    semester: 1,
+    difficulty: 1,
+    estimatedHours: 2,
+    docUrl: "https://www.alloschool.com/element/122859",
+    pdfUrl: "https://www.alloschool.com/element/122859/pdf",
+    coursUrl: "https://www.alloschool.com/element/122923",
+    keyPoints: [
+      "Limites usuelles (polynômes, rationnelles, racines)",
+      "Formes indéterminées : 0/0, ∞/∞, ∞-∞, 0×∞",
+      "Dérivée d'une fonction et règles de dérivation",
+      "Tangente à une courbe au point d'abscisse a",
+    ],
+    formulas: [
+      "lim sin(x)/x = 1 quand x→0",
+      "(uv)' = u'v + uv'",
+      "(u/v)' = (u'v - uv')/v²",
+      "y = f'(a)(x-a) + f(a)",
+    ],
+  },
+  {
+    id: "continuite1",
+    title: "Continuité (Partie 1)",
+    titleAr: "الاتصال - الجزء 1",
+    semester: 1,
+    difficulty: 2,
+    estimatedHours: 2.5,
+    docUrl: "https://www.alloschool.com/element/122860",
+    pdfUrl: "https://www.alloschool.com/element/122860/pdf",
+    coursUrl: "https://www.alloschool.com/element/122948",
+    keyPoints: [
+      "Définition de la continuité en un point",
+      "Continuité à droite et à gauche",
+      "Prolongement par continuité",
+      "Opérations sur les fonctions continues",
+    ],
+    formulas: [
+      "f continue en a ⟺ lim f(x) = f(a)",
+      "Si f continue sur [a,b], f est bornée",
+    ],
+  },
+  {
+    id: "continuite2",
+    title: "Continuité (Partie 2) - TVI",
+    titleAr: "الاتصال - الجزء 2",
+    semester: 1,
+    difficulty: 3,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/element/122861",
+    pdfUrl: "https://www.alloschool.com/element/122861/pdf",
+    coursUrl: "https://www.alloschool.com/element/122973",
+    keyPoints: [
+      "Théorème des Valeurs Intermédiaires (TVI)",
+      "Image d'un intervalle par une fonction continue",
+      "Fonction réciproque d'une fonction continue strictement monotone",
+      "Racine n-ième d'un réel positif",
+    ],
+    formulas: [
+      "f(a)·f(b) < 0 ⟹ ∃c∈]a,b[, f(c)=0",
+      "(f⁻¹)'(y) = 1/f'(f⁻¹(y))",
+    ],
+  },
+  {
+    id: "derivation1",
+    title: "Dérivation et étude des fonctions (P1)",
+    titleAr: "الاشتقاق ودراسة الدوال 1",
+    semester: 1,
+    difficulty: 2,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/element/122862",
+    pdfUrl: "https://www.alloschool.com/element/122862/pdf",
+    coursUrl: "https://www.alloschool.com/element/122993",
+    keyPoints: [
+      "Dérivée de la composée (f∘g)' = g'·f'∘g",
+      "Dérivée de la réciproque",
+      "Théorème de Rolle et Théorème des Accroissements Finis",
+      "Sens de variation et signe de la dérivée",
+    ],
+    formulas: [
+      "(f∘g)'(x) = g'(x) · f'(g(x))",
+      "TAF : ∃c∈]a,b[, f(b)-f(a) = (b-a)f'(c)",
+    ],
+  },
+  {
+    id: "derivation2",
+    title: "Dérivation et étude des fonctions (P2)",
+    titleAr: "الاشتقاق ودراسة الدوال 2",
+    semester: 1,
+    difficulty: 3,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/element/122863",
+    pdfUrl: "https://www.alloschool.com/element/122863/pdf",
+    coursUrl: "https://www.alloschool.com/element/123008",
+    keyPoints: [
+      "Concavité, convexité et points d'inflexion",
+      "Branches infinies et asymptotes",
+      "Plan d'étude complète d'une fonction",
+      "Représentation graphique",
+    ],
+    formulas: [
+      "f''(x) > 0 ⟹ f convexe",
+      "Asymptote oblique : y = ax + b si f(x) - (ax+b) → 0",
+    ],
+  },
+  {
+    id: "suites",
+    title: "Limite d'une suite",
+    titleAr: "نهاية متتالية",
+    semester: 1,
+    difficulty: 2,
+    estimatedHours: 2.5,
+    docUrl: "https://www.alloschool.com/element/122864",
+    pdfUrl: "https://www.alloschool.com/element/122864/pdf",
+    coursUrl: "https://www.alloschool.com/element/123023",
+    keyPoints: [
+      "Suite convergente / divergente",
+      "Théorèmes de comparaison et théorème des gendarmes",
+      "Suites monotones et bornées",
+      "Suites récurrentes u_{n+1} = f(u_n)",
+    ],
+    formulas: [
+      "|u_n - L| ≤ v_n et v_n → 0 ⟹ u_n → L",
+      "Si f continue et u_n→L : L = f(L)",
+    ],
+  },
+  {
+    id: "primitives",
+    title: "Fonctions primitives",
+    titleAr: "الدوال الأصلية",
+    semester: 1,
+    difficulty: 2,
+    estimatedHours: 2,
+    docUrl: "https://www.alloschool.com/element/122865",
+    pdfUrl: "https://www.alloschool.com/element/122865/pdf",
+    coursUrl: "https://www.alloschool.com/element/123038",
+    keyPoints: [
+      "Définition et existence des primitives",
+      "Primitives des fonctions usuelles",
+      "Primitive prenant une valeur donnée en un point",
+    ],
+    formulas: [
+      "∫ xⁿ dx = xⁿ⁺¹/(n+1) + C",
+      "∫ u'·uⁿ dx = uⁿ⁺¹/(n+1) + C",
+      "∫ u'/u dx = ln|u| + C",
+    ],
+  },
+  {
+    id: "logarithme",
+    title: "Fonctions logarithmiques",
+    titleAr: "الدالة اللوغاريتمية",
+    semester: 1,
+    difficulty: 3,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/element/122866",
+    pdfUrl: "https://www.alloschool.com/element/122866/pdf",
+    coursUrl: "https://www.alloschool.com/element/123053",
+    keyPoints: [
+      "Fonction ln : définition, propriétés, dérivée",
+      "Équations et inéquations avec ln",
+      "Logarithme décimal log",
+      "Étude de fonctions contenant ln",
+    ],
+    formulas: [
+      "ln(ab) = ln(a) + ln(b)",
+      "ln(aⁿ) = n·ln(a)",
+      "(ln u)' = u'/u",
+      "lim ln(x)/x = 0 quand x→+∞",
+    ],
+  },
+  {
+    id: "exponentielle",
+    title: "Fonctions exponentielles",
+    titleAr: "الدالة الأسية",
+    semester: 2,
+    difficulty: 3,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    pdfUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    coursUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    keyPoints: [
+      "Fonction exp : réciproque de ln",
+      "Propriétés algébriques et dérivée",
+      "Fonction a^x et limites de référence",
+      "Équations différentielles y' = ay + b",
+    ],
+    formulas: [
+      "e^(a+b) = e^a · e^b",
+      "(e^u)' = u' · e^u",
+      "lim e^x/x = +∞ quand x→+∞",
+      "y' = ay ⟺ y(x) = C·e^(ax)",
+    ],
+  },
+  {
+    id: "integrale",
+    title: "Calcul intégral",
+    titleAr: "حساب التكامل",
+    semester: 2,
+    difficulty: 3,
+    estimatedHours: 3.5,
+    docUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    pdfUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    coursUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    keyPoints: [
+      "Intégrale de Riemann et propriétés",
+      "Intégration par parties (IPP)",
+      "Changement de variable",
+      "Calcul d'aires et de volumes",
+      "Valeur moyenne",
+    ],
+    formulas: [
+      "∫ₐᵇ f(x)dx = F(b) - F(a)",
+      "IPP : ∫u'v = [uv] - ∫uv'",
+      "Aire = ∫ₐᵇ |f(x)-g(x)| dx",
+    ],
+  },
+  {
+    id: "complexes1",
+    title: "Nombres complexes (Partie 1)",
+    titleAr: "الأعداد العقدية 1",
+    semester: 1,
+    difficulty: 2,
+    estimatedHours: 2.5,
+    docUrl: "https://www.alloschool.com/element/122870",
+    pdfUrl: "https://www.alloschool.com/element/122870/pdf",
+    coursUrl: "https://www.alloschool.com/element/123798",
+    keyPoints: [
+      "Forme algébrique a + ib",
+      "Conjugué et module",
+      "Équation du second degré dans ℂ",
+      "Représentation géométrique",
+    ],
+    formulas: [
+      "|z|² = z·z̄",
+      "z = a+ib ⟹ z̄ = a-ib",
+      "i² = -1",
+    ],
+  },
+  {
+    id: "complexes2",
+    title: "Nombres complexes (Partie 2)",
+    titleAr: "الأعداد العقدية 2",
+    semester: 2,
+    difficulty: 3,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    pdfUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    coursUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    keyPoints: [
+      "Forme trigonométrique et exponentielle z = r·e^(iθ)",
+      "Formule de Moivre et formules d'Euler",
+      "Racines n-ièmes d'un complexe",
+      "Transformations du plan (rotation, translation, homothétie)",
+    ],
+    formulas: [
+      "(cosθ + i sinθ)ⁿ = cos(nθ) + i sin(nθ)",
+      "cos(θ) = (e^(iθ) + e^(-iθ))/2",
+      "Rotation : z' - ω = e^(iα)(z - ω)",
+    ],
+  },
+  {
+    id: "arithmetique",
+    title: "Arithmétique dans ℤ",
+    titleAr: "الحسابيات في ℤ",
+    semester: 2,
+    difficulty: 3,
+    estimatedHours: 3,
+    docUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    pdfUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    coursUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    keyPoints: [
+      "Divisibilité, division euclidienne",
+      "PGCD, PPCM, algorithme d'Euclide",
+      "Théorème de Bézout et Gauss",
+      "Congruences et nombres premiers",
+    ],
+    formulas: [
+      "Bézout : au + bv = pgcd(a,b)",
+      "Gauss : a|bc et pgcd(a,b)=1 ⟹ a|c",
+      "a ≡ b [n] ⟺ n | (a-b)",
+    ],
+  },
+  {
+    id: "denombrement",
+    title: "Dénombrement",
+    titleAr: "العد",
+    semester: 2,
+    difficulty: 2,
+    estimatedHours: 2,
+    docUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    pdfUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    coursUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    keyPoints: [
+      "Principe additif et multiplicatif",
+      "Arrangements et permutations",
+      "Combinaisons et binôme de Newton",
+    ],
+    formulas: [
+      "Aₙᵖ = n!/(n-p)!",
+      "Cₙᵖ = n!/(p!(n-p)!)",
+      "(a+b)ⁿ = Σ Cₙᵏ aᵏbⁿ⁻ᵏ",
+    ],
+  },
+  {
+    id: "probabilites",
+    title: "Probabilités",
+    titleAr: "الاحتمالات",
+    semester: 2,
+    difficulty: 2,
+    estimatedHours: 2.5,
+    docUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    pdfUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    coursUrl: "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof",
+    keyPoints: [
+      "Vocabulaire des événements",
+      "Probabilité conditionnelle et indépendance",
+      "Variable aléatoire et espérance",
+      "Loi binomiale",
+    ],
+    formulas: [
+      "P(A∩B) = P(A)·P(B|A)",
+      "P(A∪B) = P(A) + P(B) - P(A∩B)",
+      "E(X) = Σ xᵢ·P(X=xᵢ)",
+    ],
+  },
+];
+
+export type Day = {
+  day: number;
+  theme: string;
+  themeAr: string;
+  color: string;
+  chapterIds: string[];
+  tip: string;
+  focus: string;
+};
+
+export const plan: Day[] = [
+  {
+    day: 1,
+    theme: "Fondations : Limites & Dérivation",
+    themeAr: "اليوم 1 — الأساسيات",
+    color: "from-violet-500 to-purple-600",
+    chapterIds: ["limites"],
+    tip: "Bda b les rappels — bla mafhoum had le bab, baqi 9 jours kayhwasa.",
+    focus: "Maîtriser les formes indéterminées et règles de dérivation.",
+  },
+  {
+    day: 2,
+    theme: "Continuité & TVI",
+    themeAr: "اليوم 2 — الاتصال",
+    color: "from-fuchsia-500 to-pink-600",
+    chapterIds: ["continuite1", "continuite2"],
+    tip: "TVI = arme dyalk f les questions 'montrer que l'équation admet une solution'.",
+    focus: "TVI, fonction réciproque, racines n-ièmes.",
+  },
+  {
+    day: 3,
+    theme: "Étude des Fonctions — Niveau 1",
+    themeAr: "اليوم 3 — دراسة الدوال",
+    color: "from-cyan-500 to-blue-600",
+    chapterIds: ["derivation1"],
+    tip: "Hfed l'plan d'étude : Df → limites → dérivée → tableau → asymptotes → graphe.",
+    focus: "Composée, TAF, sens de variation.",
+  },
+  {
+    day: 4,
+    theme: "Étude des Fonctions — Niveau 2",
+    themeAr: "اليوم 4 — دراسة الدوال 2",
+    color: "from-blue-500 to-indigo-600",
+    chapterIds: ["derivation2"],
+    tip: "Convexité = f'' > 0. Point d'inflexion = changement de signe de f''.",
+    focus: "Convexité, asymptotes, étude complète.",
+  },
+  {
+    day: 5,
+    theme: "Suites Numériques",
+    themeAr: "اليوم 5 — المتتاليات",
+    color: "from-emerald-500 to-teal-600",
+    chapterIds: ["suites"],
+    tip: "Récurrence + monotonie + majoration = convergence garantie.",
+    focus: "Théorème des gendarmes, suites récurrentes.",
+  },
+  {
+    day: 6,
+    theme: "Primitives & Logarithme",
+    themeAr: "اليوم 6 — الأصلية و اللوغاريتم",
+    color: "from-amber-500 to-orange-600",
+    chapterIds: ["primitives", "logarithme"],
+    tip: "ln(uv) = ln u + ln v — kayn questions kamla mabnia 3la had l'égalité.",
+    focus: "Reconnaître u'/u, étudier x·ln(x).",
+  },
+  {
+    day: 7,
+    theme: "Exponentielle & Équations diff.",
+    themeAr: "اليوم 7 — الأسية",
+    color: "from-rose-500 to-red-600",
+    chapterIds: ["exponentielle"],
+    tip: "exp w ln houma inverses — kola 7aja f ln 3andha équivalent f exp.",
+    focus: "y' = ay + b, croissance comparée.",
+  },
+  {
+    day: 8,
+    theme: "Calcul Intégral",
+    themeAr: "اليوم 8 — التكامل",
+    color: "from-purple-500 to-fuchsia-600",
+    chapterIds: ["integrale"],
+    tip: "IPP : 'u' kolla nakhtarou l'fonction li dérivée dyalha bsi6a.",
+    focus: "IPP, changement de variable, aires.",
+  },
+  {
+    day: 9,
+    theme: "Nombres Complexes",
+    themeAr: "اليوم 9 — الأعداد العقدية",
+    color: "from-indigo-500 to-violet-600",
+    chapterIds: ["complexes1", "complexes2"],
+    tip: "F la géométrie : transformation = expression complexe + cas particulier.",
+    focus: "Forme trigonométrique, Moivre, rotations.",
+  },
+  {
+    day: 10,
+    theme: "Arithmétique + Proba & Révision Finale",
+    themeAr: "اليوم 10 — المراجعة النهائية",
+    color: "from-pink-500 to-rose-600",
+    chapterIds: ["arithmetique", "denombrement", "probabilites"],
+    tip: "Lyoum lakhir : 7el examen national kaml b temps réel (3h).",
+    focus: "Bézout, Gauss, loi binomiale + examen blanc.",
+  },
+];
+
+export const examNationalUrl = "https://www.alloschool.com/course/mathematiques-2eme-bac-sciences-physiques-biof";
