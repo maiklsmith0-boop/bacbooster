@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { Subject } from "../data/subjects";
 
-type Props = {
+type HeroProps = {
   progress: number;
-  subject: Subject;
+  currentSubject: any;
 };
 
-export default function Hero({ progress, subject }: Props) {
+export default function Hero({ progress, currentSubject }: HeroProps) {
   const [days, setDays] = useState(10);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
+    // Persistent countdown stored in localStorage (start of 10-day journey)
     const KEY = "bacboost-deadline";
     let deadline = localStorage.getItem(KEY);
     if (!deadline) {
@@ -49,65 +49,51 @@ export default function Hero({ progress, subject }: Props) {
   };
 
   return (
-    <section className="relative overflow-hidden pt-36 pb-20">
+    <section className="relative overflow-hidden pt-28 pb-16">
       <div className="absolute inset-0 bg-radial pointer-events-none" />
       <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* LEFT */}
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold uppercase tracking-wider">
-              <span className="relative flex h-2.5 w-2.5">
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm mb-6">
+              <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-violet-500"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
               </span>
-              <span>{subject.icon} Mode {subject.name} · {subject.nameAr}</span>
+              AI Tutor · Math 2 BAC SP BIOF · Source : AlloSchool
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-black leading-[1.1]">
+            <h1 className="text-5xl md:text-7xl font-black leading-[1.05] mb-6">
               <span className="text-gradient">10 jours</span><br />
-              <span className="text-white">pour réussir le Bac</span><br />
-              <span className="text-white/80 text-3xl md:text-5xl font-extrabold flex items-center gap-3 mt-2">
-                <span>{subject.name}</span>
-                <span className="text-xl md:text-2xl px-3 py-1 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg">
-                  {subject.badge}
-                </span>
-              </span>
+              <span className="text-white">pour réussir</span><br />
+              <span className="text-white/80 text-3xl md:text-5xl font-bold">{currentSubject.name} 🇲🇦</span>
             </h1>
 
-            <p className="text-lg text-white/75 max-w-xl leading-relaxed">
-              {subject.description} Profitez de l'AI Tutor b darija, des résumés de cours, exercices et examens nationaux corrigés d'AlloSchool.
+            <p className="text-lg text-white/70 mb-8 max-w-xl leading-relaxed">
+              Plan de révision intelligent dyal <strong className="text-white">{currentSubject.name} 2 BAC</strong> — 
+              {currentSubject.nameAr} • Chapitres mn AlloSchool • AI Tutor • Quiz interactifs • 100% gratuit.
             </p>
 
-            <div className="flex flex-wrap gap-4 pt-2">
-              <a
-                href="#plan"
-                className={`px-8 py-4 rounded-2xl bg-gradient-to-r ${subject.color} hover:opacity-90 text-white font-bold text-base transition-all duration-300 glow flex items-center gap-2 shadow-xl hover:scale-105`}
-              >
-                <span>🚀 Lancer le plan 10 Jours</span>
+            <div className="flex flex-wrap gap-4 mb-10">
+              <a href="#plan" className="px-6 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-semibold transition-all glow">
+                🚀 Commencer la révision
               </a>
-              <a
-                href="#ai-tutor"
-                className="px-8 py-4 rounded-2xl border border-white/20 hover:bg-white/10 text-white font-bold text-base transition-all duration-300 flex items-center gap-2"
-              >
-                <span>💬 Poser une question à l'AI</span>
+              <a href="#ai-tutor" className="px-6 py-3 rounded-xl border border-white/15 hover:bg-white/5 text-white font-semibold transition-all">
+                💬 Parler à l'AI Tutor
               </a>
             </div>
 
             {/* Progress */}
-            <div className="border-glow rounded-3xl p-6 bg-white/[0.02]">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-sm font-bold text-white/80 flex items-center gap-2">
-                  <span>📈 Progression dans {subject.name}</span>
-                </span>
-                <span className="text-base font-black text-violet-300 bg-violet-500/20 px-3 py-1 rounded-xl border border-violet-500/30">
-                  {progress}%
-                </span>
+            <div className="border-glow rounded-2xl p-5">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm text-white/60">Progression globale</span>
+                <span className="text-sm font-bold text-violet-300">{progress}%</span>
               </div>
-              <div className="h-4 bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/5">
+              <div className="h-3 bg-white/5 rounded-full overflow-hidden">
                 <div
-                  className={`h-full bg-gradient-to-r ${subject.color} rounded-full transition-all duration-1000 shadow-lg`}
+                  className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 rounded-full transition-all duration-700"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -117,14 +103,10 @@ export default function Hero({ progress, subject }: Props) {
           {/* RIGHT - Countdown */}
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 blur-3xl animate-pulse-slow" />
-            <div className="relative border-glow rounded-3xl p-8 bg-gradient-to-br from-white/[0.04] to-white/[0.01] animate-float shadow-2xl">
-              <div className="text-center mb-8">
-                <div className="text-xs text-violet-300 uppercase tracking-[0.25em] font-black mb-2">
-                  ⏳ Compte à rebours du Bac
-                </div>
-                <div className="text-sm text-white/60 font-semibold">
-                  Reste concentré, chaque minute compte pour l'excellence !
-                </div>
+            <div className="relative border-glow rounded-3xl p-8 animate-float">
+              <div className="text-center mb-6">
+                <div className="text-sm text-white/50 uppercase tracking-widest mb-1">Temps restant</div>
+                <div className="text-xs text-white/40">⏰ Reste concentré, ga3 dakhal f la course</div>
               </div>
 
               <div className="grid grid-cols-4 gap-3">
@@ -134,28 +116,28 @@ export default function Hero({ progress, subject }: Props) {
                   { v: minutes, l: "Min" },
                   { v: seconds, l: "Sec" },
                 ].map((it) => (
-                  <div key={it.l} className="text-center group">
-                    <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/15 rounded-2xl py-6 px-2 shadow-inner group-hover:border-violet-400 transition duration-300">
+                  <div key={it.l} className="text-center">
+                    <div className="bg-gradient-to-br from-violet-600/30 to-fuchsia-600/20 border border-violet-500/30 rounded-2xl py-5 px-2">
                       <div className="text-4xl md:text-5xl font-black text-white tabular-nums">
                         {String(it.v).padStart(2, "0")}
                       </div>
                     </div>
-                    <div className="text-xs text-white/50 mt-3 uppercase tracking-wider font-extrabold">{it.l}</div>
+                    <div className="text-xs text-white/50 mt-2 uppercase">{it.l}</div>
                   </div>
                 ))}
               </div>
 
               <button
                 onClick={resetCountdown}
-                className="mt-8 w-full text-xs text-white/40 hover:text-violet-300 hover:underline transition duration-200 text-center block font-mono"
+                className="mt-6 w-full text-xs text-white/40 hover:text-violet-300 transition"
               >
-                🔄 Réinitialiser le compte à rebours (Débuter aujourd'hui)
+                🔄 Reset countdown (commencer maintenant)
               </button>
 
-              <div className="mt-8 grid grid-cols-3 gap-2 pt-8 border-t border-white/10">
-                <Stat icon="📚" label="Chapitres" value={String(subject.chapters.length)} />
+              <div className="mt-6 grid grid-cols-3 gap-2 pt-6 border-t border-white/10">
+                <Stat icon="📚" label="Chapitres" value="15" />
                 <Stat icon="🎯" label="Jours" value="10" />
-                <Stat icon="🇲🇦" label="Source" value="AlloSchool" />
+                <Stat icon="🧠" label="AI Tutor" value="24/7" />
               </div>
             </div>
           </div>
@@ -167,10 +149,10 @@ export default function Hero({ progress, subject }: Props) {
 
 function Stat({ icon, label, value }: { icon: string; label: string; value: string }) {
   return (
-    <div className="text-center bg-white/[0.02] p-3 rounded-2xl border border-white/5">
+    <div className="text-center">
       <div className="text-2xl mb-1">{icon}</div>
-      <div className="text-xl font-black text-white">{value}</div>
-      <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">{label}</div>
+      <div className="text-lg font-bold text-white">{value}</div>
+      <div className="text-[10px] text-white/40 uppercase">{label}</div>
     </div>
   );
 }

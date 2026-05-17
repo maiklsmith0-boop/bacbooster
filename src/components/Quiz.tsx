@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react";
-import { quizQuestionsBySubject, QuizQ } from "../data/aiResponses";
-import { subjectsData } from "../data/subjects";
+import { useState } from "react";
+import { quizQuestions } from "../data/aiResponses";
 import { SectionHeader } from "./PlanSection";
+import { type Subject } from "../data/subjects";
 
-type Props = {
-  activeSub: string;
-};
-
-export default function Quiz({ activeSub }: Props) {
+export default function Quiz({ subject }: { subject: Subject }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
   const [answered, setAnswered] = useState(false);
 
-  const questions: QuizQ[] = quizQuestionsBySubject[activeSub] || quizQuestionsBySubject.math;
-  const q = questions[current] || questions[0];
-  const sub = subjectsData[activeSub];
-
-  useEffect(() => {
-    // Reset quiz when switching subject
-    setCurrent(0);
-    setSelected(null);
-    setScore(0);
-    setDone(false);
-    setAnswered(false);
-  }, [activeSub]);
+  const q = quizQuestions[current];
 
   const pick = (i: number) => {
     if (answered) return;
@@ -35,7 +20,7 @@ export default function Quiz({ activeSub }: Props) {
   };
 
   const next = () => {
-    if (current + 1 >= questions.length) {
+    if (current + 1 >= quizQuestions.length) {
       setDone(true);
     } else {
       setCurrent(current + 1);
@@ -56,69 +41,69 @@ export default function Quiz({ activeSub }: Props) {
     <section id="quiz" className="py-20 relative">
       <div className="max-w-3xl mx-auto px-6">
         <SectionHeader
-          tag={`🎯 Quiz ${sub.name}`}
+          tag="🎯 Quiz Express"
           title={<>Test rapide en <span className="text-gradient">10 questions</span></>}
-          sub={`Vérifiez vos connaissances sur les notions fondamentales de ${sub.name}. Chaque bonne réponse vaut 1 point.`}
+          sub="Tjarrab rasek — kola question kayhmllak point. F lakhir tchouf l'résultat dyalk."
         />
 
-        <div className="mt-12 border-glow rounded-3xl p-8 bg-white/[0.02] shadow-2xl">
+        <div className="mt-12 border-glow rounded-3xl p-8">
           {done ? (
-            <ResultView score={score} total={questions.length} restart={restart} subName={sub.name} />
+            <ResultView score={score} total={quizQuestions.length} restart={restart} />
           ) : (
             <>
               {/* Progress */}
-              <div className="flex justify-between items-center mb-6 font-bold">
-                <span className="text-xs uppercase text-white/50 tracking-wider">
-                  Question {current + 1}/{questions.length}
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-xs uppercase text-white/40 tracking-wider">
+                  Question {current + 1}/{quizQuestions.length}
                 </span>
-                <span className="text-xs px-3.5 py-1.5 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30 font-mono shadow-sm">
+                <span className="text-xs px-3 py-1 rounded-full bg-violet-500/15 text-violet-300 border border-violet-500/20">
                   {q.topic}
                 </span>
               </div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-8 p-0.5 border border-white/5">
+              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden mb-8">
                 <div
-                  className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 rounded-full transition-all duration-500"
-                  style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+                  className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500"
+                  style={{ width: `${((current + 1) / quizQuestions.length) * 100}%` }}
                 />
               </div>
 
               {/* Question */}
-              <h3 className="text-2xl font-bold text-white mb-8 font-mono leading-relaxed">{q.question}</h3>
+              <h3 className="text-2xl font-bold text-white mb-6 font-mono">{q.question}</h3>
 
-              <div className="space-y-4">
-                {q.options.map((opt: string, i: number) => {
+              <div className="space-y-3">
+                {q.options.map((opt, i) => {
                   const isCorrect = i === q.correct;
                   const isPicked = i === selected;
-                  let style = "border-white/15 bg-white/[0.03] hover:bg-white/[0.08] hover:border-violet-400/50 text-white";
+                  let style = "border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-violet-400/40";
                   if (answered) {
-                    if (isCorrect) style = "border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/50";
-                    else if (isPicked) style = "border-rose-500 bg-rose-500/20 text-rose-300 font-bold ring-2 ring-rose-500/50";
-                    else style = "border-white/10 bg-white/[0.02] opacity-30";
+                    if (isCorrect) style = "border-emerald-500/50 bg-emerald-500/10 text-emerald-300";
+                    else if (isPicked) style = "border-rose-500/50 bg-rose-500/10 text-rose-300";
+                    else style = "border-white/10 bg-white/[0.02] opacity-40";
                   }
                   return (
                     <button
                       key={i}
                       onClick={() => pick(i)}
                       disabled={answered}
-                      className={`w-full text-left px-6 py-4 rounded-2xl border transition-all duration-300 font-mono flex items-center justify-between text-base ${style}`}
+                      className={`w-full text-left px-5 py-4 rounded-xl border transition font-mono flex items-center justify-between ${style}`}
                     >
                       <span>{opt}</span>
-                      {answered && isCorrect && <span className="text-xl font-black text-emerald-400">✓</span>}
-                      {answered && isPicked && !isCorrect && <span className="text-xl font-black text-rose-400">✗</span>}
+                      {answered && isCorrect && <span>✓</span>}
+                      {answered && isPicked && !isCorrect && <span>✗</span>}
                     </button>
                   );
                 })}
               </div>
 
               {answered && (
-                <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-violet-500/15 to-fuchsia-500/15 border border-violet-500/30 animate-fade-in shadow-inner">
-                  <div className="text-xs uppercase text-violet-300 font-black tracking-wider mb-2">💡 Explication</div>
-                  <div className="text-base text-white/90 font-medium leading-relaxed">{q.explanation}</div>
+                <div className="mt-6 p-4 rounded-xl bg-violet-500/10 border border-violet-500/20">
+                  <div className="text-xs uppercase text-violet-300 font-bold mb-1">💡 Explication</div>
+                  <div className="text-sm text-white/80">{q.explanation}</div>
                   <button
                     onClick={next}
-                    className="mt-6 w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 font-bold text-white text-base transition-all duration-300 glow shadow-lg"
+                    className="mt-4 w-full px-5 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 font-semibold text-white transition glow"
                   >
-                    {current + 1 >= questions.length ? "🏁 Voir le résultat final" : "Question suivante →"}
+                    {current + 1 >= quizQuestions.length ? "🏁 Voir résultat" : "Question suivante →"}
                   </button>
                 </div>
               )}
@@ -130,28 +115,28 @@ export default function Quiz({ activeSub }: Props) {
   );
 }
 
-function ResultView({ score, total, restart, subName }: { score: number; total: number; restart: () => void; subName: string }) {
+function ResultView({ score, total, restart }: { score: number; total: number; restart: () => void }) {
   const pct = Math.round((score / total) * 100);
   const verdict =
-    pct >= 80 ? { emoji: "🏆", title: "Excellent résultat !", msg: `Tu as parfaitement assimilé les concepts clés de ${subName}. Poursuis ainsi !`, color: "from-emerald-400 to-teal-500" } :
-    pct >= 60 ? { emoji: "💪", title: "Bonnes fondations", msg: `Quelques notions à revoir en ${subName}, mais tu es sur la très bonne voie.`, color: "from-violet-400 to-fuchsia-500" } :
-    pct >= 40 ? { emoji: "📚", title: "Poursuis tes efforts", msg: `Il est conseillé de relire les fiches de cours de ${subName} et de refaire le quiz.`, color: "from-amber-400 to-orange-500" } :
-    { emoji: "🎯", title: "Début d'apprentissage", msg: `Reprends le plan 10 Jours de ${subName} dès le Jour 1. Chaque minute compte !`, color: "from-rose-500 to-pink-500" };
+    pct >= 80 ? { emoji: "🏆", title: "Excellent!", msg: "Nta jahz l'examen national. Continue!", color: "from-emerald-500 to-teal-600" } :
+    pct >= 60 ? { emoji: "💪", title: "Bonne base", msg: "Quelques chapitres bgha rappel — mais nta f la bonne voie.", color: "from-violet-500 to-fuchsia-600" } :
+    pct >= 40 ? { emoji: "📚", title: "Continue à travailler", msg: "Khassk t3awd l'plan 10 jours. Cha9 wahd jour 3la khak.", color: "from-amber-500 to-orange-600" } :
+    { emoji: "🎯", title: "Lbida lwla!", msg: "Bda mn jour 1 dyal le plan. T9der dirha!", color: "from-rose-500 to-pink-600" };
 
   return (
-    <div className="text-center py-12">
-      <div className="text-8xl mb-6 animate-bounce">{verdict.emoji}</div>
-      <h3 className="text-4xl font-black text-white mb-3">{verdict.title}</h3>
-      <div className={`inline-block text-8xl font-black bg-gradient-to-br ${verdict.color} bg-clip-text text-transparent my-4 py-2`}>
+    <div className="text-center py-8">
+      <div className="text-7xl mb-4">{verdict.emoji}</div>
+      <h3 className="text-3xl font-black text-white mb-2">{verdict.title}</h3>
+      <div className={`inline-block text-7xl font-black bg-gradient-to-br ${verdict.color} bg-clip-text text-transparent`}>
         {score}/{total}
       </div>
-      <div className="text-xl font-bold text-white/70 mt-2">{pct}% de bonnes réponses</div>
-      <p className="text-lg text-white/80 mt-6 max-w-md mx-auto leading-relaxed">{verdict.msg}</p>
+      <div className="text-white/60 mt-2">{pct}% de bonnes réponses</div>
+      <p className="text-white/70 mt-6 max-w-md mx-auto">{verdict.msg}</p>
       <button
         onClick={restart}
-        className="mt-10 px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 font-black text-white text-base transition-all duration-300 glow shadow-xl hover:scale-105"
+        className="mt-8 px-6 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 font-semibold text-white transition glow"
       >
-        🔄 Refaire le Quiz {subName}
+        🔄 Rejouer
       </button>
     </div>
   );

@@ -1,21 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { getAIResponse, type Message } from "../data/aiResponses";
 import { SectionHeader } from "./PlanSection";
+import { type Subject } from "../data/subjects";
 
 const SUGGESTIONS = [
-  "📐 Dériver ln(x²+1)",
-  "⚡ Circuit RLC & modulation",
-  "🧬 ATP & Respiration",
-  "🏛️ La personne & autrui",
-  "🇬🇧 Future perfect (by 2030)",
-  "😰 Stress dyal examen",
+  "Comment dériver ln(x²+1) ?",
+  "Explique-moi le TVI",
+  "Plan de révision 10 jours",
+  "Formule de Moivre ?",
+  "Stress dyal examen 😰",
+  "Théorème de Bézout",
 ];
 
-export default function AITutor() {
+export default function AITutor({ subject }: { subject: Subject }) {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "ai",
-      text: "🤖 Salam! Ana **BacBoost AI**, mou3alim dyalk personnel l'ga3 mawad 2ème BAC SP BIOF (Maths, PC, SVT, Philo, Anglais).\n\nS9siwni 3la n'importe quel chapitre ou notion :\n• 📐 Formules de Maths (limites, dérivées, TVI, suites, intégrales...)\n• ⚡ Physique-Chimie (Ondes, nucléaire, RC/RL/RLC, acide-base, Newton...)\n• 🧬 SVT (ATP, muscle strié, ADN, méiose, lois statistiques...)\n• 🏛️ Philosophie (Personne, autrui, vérité, méthodologie de dissertation...)\n• 🇬🇧 Anglais (Tenses, passive voice, reported speech, linking words, writing...)\n• 💆 Gestion du stress w plan dyal révision",
+      text: "🤖 Salam! Ana **BacBoost AI**, mou3alim dyalk dyal Math.\n\nN9der nsaedek f :\n• Cours w formules (limites, dérivées, intégrales...)\n• Méthodes dyal exercices\n• Plan dyal révision\n• Techniques bach tg7lab le stress\n\nS9siwni 3la chi 7aja!",
       time: Date.now(),
     },
   ]);
@@ -45,55 +46,48 @@ export default function AITutor() {
     <section id="ai-tutor" className="py-20 relative">
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
-          tag="🧠 AI Tutor 2.0"
-          title={<>Ton <span className="text-gradient">professeur</span> polyvalent</>}
-          sub="Posez votre question en darija ou français sur n'importe quelle matière du Bac. L'IA analyse les mots-clés et fournit le cours synthétique."
+          tag="🧠 AI Tutor"
+          title={<>Ton <span className="text-gradient">mou3alim</span> personnel</>}
+          sub="S9si chi swal — kaymaththel cours, méthodes, formules, w nasi7at psychologiques bach tnaja7."
         />
 
-        <div className="mt-12 border-glow rounded-3xl overflow-hidden bg-white/[0.02] shadow-2xl">
+        <div className="mt-12 border-glow rounded-3xl overflow-hidden">
           {/* Header */}
-          <div className="flex items-center gap-4 p-5 border-b border-white/10 bg-black/40">
+          <div className="flex items-center gap-3 p-4 border-b border-white/10 bg-white/[0.02]">
             <div className="relative">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-500 flex items-center justify-center text-2xl shadow-lg animate-pulse-slow">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-lg shadow-lg">
                 🤖
               </div>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-[#07060d] shadow-sm" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#07060d]" />
             </div>
             <div className="flex-1">
-              <div className="font-black text-lg text-white flex items-center gap-2">
-                <span>BacBoost AI 2.0</span>
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">
-                  Online
-                </span>
-              </div>
-              <div className="text-xs text-white/50 font-medium mt-0.5">Spécialiste 2 BAC SP BIOF (Toutes matières)</div>
+              <div className="font-bold text-white">BacBoost AI</div>
+              <div className="text-xs text-emerald-400">● En ligne · Spécialiste Math BAC</div>
             </div>
             <button
               onClick={() => setMessages([messages[0]])}
-              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition flex items-center gap-1.5"
+              className="text-xs text-white/40 hover:text-white/70 transition"
             >
-              <span>🔄 Réinitialiser</span>
+              🗑 Reset
             </button>
           </div>
 
           {/* Messages */}
           <div
             ref={scrollRef}
-            className="h-[520px] overflow-y-auto scrollbar-thin p-6 space-y-6 bg-gradient-to-b from-transparent via-violet-950/5 to-black/40"
+            className="h-[480px] overflow-y-auto scrollbar-thin p-6 space-y-4 bg-gradient-to-b from-transparent to-violet-950/10"
           >
             {messages.map((m, i) => (
               <MessageBubble key={i} msg={m} />
             ))}
             {thinking && (
-              <div className="flex gap-4 items-start animate-fade-in">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-500 flex items-center justify-center text-lg shadow-md shrink-0">
-                  🤖
-                </div>
-                <div className="bg-white/5 border border-white/10 px-5 py-4 rounded-2xl rounded-tl-sm flex items-center shadow-md">
-                  <div className="flex gap-1.5 items-center py-1">
-                    <span className="w-2.5 h-2.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-2.5 h-2.5 bg-fuchsia-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-2.5 h-2.5 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              <div className="flex gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-sm">🤖</div>
+                <div className="bg-white/5 px-4 py-3 rounded-2xl rounded-tl-sm">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 </div>
               </div>
@@ -101,18 +95,15 @@ export default function AITutor() {
           </div>
 
           {/* Suggestions */}
-          <div className="px-5 py-3.5 border-t border-white/10 bg-black/20 flex gap-2.5 overflow-x-auto scrollbar-thin">
-            <span className="text-xs font-bold text-white/40 uppercase tracking-wider shrink-0 flex items-center mr-1">
-              Suggestions :
-            </span>
+          <div className="px-4 pt-3 pb-2 border-t border-white/10 flex gap-2 overflow-x-auto scrollbar-thin">
             {SUGGESTIONS.map((s, i) => (
               <button
                 key={i}
                 onClick={() => send(s)}
-                className="shrink-0 text-xs px-4 py-2 rounded-xl bg-white/5 hover:bg-gradient-to-r hover:from-violet-500 hover:to-fuchsia-500 border border-white/10 text-white/80 hover:text-white font-bold transition-all duration-300 shadow-sm hover:scale-105"
+                className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-violet-500/20 border border-white/10 hover:border-violet-500/40 text-white/70 hover:text-white transition"
               >
                 {s}
-            </button>
+              </button>
             ))}
           </div>
 
@@ -122,18 +113,18 @@ export default function AITutor() {
               e.preventDefault();
               send(input);
             }}
-            className="p-5 border-t border-white/10 flex gap-3 bg-black/40"
+            className="p-4 border-t border-white/10 flex gap-2"
           >
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Posez votre question (ex: Kifash ndir tableau d'avancement? Wla TVI?)"
-              className="flex-1 bg-white/5 border border-white/10 focus:border-violet-500/60 rounded-2xl px-5 py-4 text-base text-white placeholder:text-white/30 outline-none transition duration-300 shadow-inner font-medium"
+              placeholder="Ktab swalek... (mathali: kifash ndir intégrale par parties?)"
+              className="flex-1 bg-white/5 border border-white/10 focus:border-violet-500/50 rounded-xl px-4 py-3 text-white placeholder:text-white/30 outline-none transition"
             />
             <button
               type="submit"
               disabled={!input.trim() || thinking}
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-600 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed font-black text-white text-lg transition-all duration-300 glow flex items-center justify-center shadow-lg"
+              className="px-5 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 disabled:opacity-40 disabled:cursor-not-allowed font-semibold text-white transition glow"
             >
               ➤
             </button>
@@ -147,18 +138,18 @@ export default function AITutor() {
 function MessageBubble({ msg }: { msg: Message }) {
   const isUser = msg.role === "user";
   return (
-    <div className={`flex gap-4 items-start ${isUser ? "flex-row-reverse" : ""}`}>
-      <div className={`w-10 h-10 shrink-0 rounded-2xl flex items-center justify-center text-lg shadow-md ${
+    <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
+      <div className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center text-sm ${
         isUser
-          ? "bg-white/15 border border-white/20 text-white"
-          : "bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-500 text-white"
+          ? "bg-white/10"
+          : "bg-gradient-to-br from-violet-500 to-fuchsia-600"
       }`}>
         {isUser ? "🧑‍🎓" : "🤖"}
       </div>
-      <div className={`max-w-[85%] px-6 py-4.5 rounded-3xl whitespace-pre-wrap text-base font-medium leading-relaxed shadow-lg ${
+      <div className={`max-w-[80%] px-4 py-3 rounded-2xl whitespace-pre-wrap text-sm leading-relaxed ${
         isUser
-          ? "bg-gradient-to-br from-violet-600 via-fuchsia-600 to-pink-600 text-white rounded-tr-sm"
-          : "bg-white/[0.05] border border-white/10 text-white/95 rounded-tl-sm backdrop-blur-sm"
+          ? "bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white rounded-tr-sm"
+          : "bg-white/[0.06] border border-white/5 text-white/90 rounded-tl-sm"
       }`}>
         {formatMessage(msg.text)}
       </div>
@@ -167,10 +158,11 @@ function MessageBubble({ msg }: { msg: Message }) {
 }
 
 function formatMessage(text: string) {
+  // Bold **text** support
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((p, i) => {
     if (p.startsWith("**") && p.endsWith("**")) {
-      return <strong key={i} className="text-violet-300 font-extrabold">{p.slice(2, -2)}</strong>;
+      return <strong key={i} className="text-violet-300">{p.slice(2, -2)}</strong>;
     }
     return <span key={i}>{p}</span>;
   });
